@@ -1,0 +1,39 @@
+def corecao(edgers):
+    graph = {}
+    for edger in edgers:
+        node_a, node_b = edger
+        if node_a not in graph:
+            graph[node_a] = []
+        if node_b not in graph:
+            graph[node_b] = []
+        
+        graph[node_a].append(node_b)
+        graph[node_b].append(node_a)
+
+    return graph
+
+def count_graus_eulerian(graph):
+    graus = {}
+    for aresta, con in graph.items():
+        graus[aresta] = len(con)
+
+    return graus
+
+def is_eulerian(graph):
+    for node in graph:
+        if (len(graph[node]) % 2 != 0):
+            return "Grafo não Euleriano"
+    return "Grafo Euleriano"
+
+
+edgers = []
+for i in range(3):
+    edgers.append(list(map(int, input().split())))
+
+print(edgers)
+graph = corecao(edgers)
+print(graph)
+is_ = is_eulerian(graph)
+print(is_)
+r = count_graus_eulerian(graph)
+print(r)
