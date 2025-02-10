@@ -1,0 +1,58 @@
+def concerte(graph):
+    nodes = {}
+    
+    for edger in graph:
+        node_a, node_b = edger
+        
+        if node_a not in nodes:
+            nodes[node_a] = []
+            
+        if node_b not in nodes:
+            nodes[node_b] = []
+            
+        nodes[node_a].append(node_b)
+        nodes[node_b].append(node_a)
+        
+    print(nodes)
+    return nodes
+    
+def has_been_path(graph, source, destination):
+    visited = set()
+    parent = {source: None}
+    
+    if source == destination:
+        return [source]
+            
+    queue = [source]
+    while queue:
+        current_node = queue.pop(0)  
+        
+        if current_node in visited:
+            continue
+        visited.add(current_node)
+        
+        if current_node == destination:
+            path = []
+            while current_node is not None:
+                path.append(current_node)
+                current_node = parent[current_node]
+            return path[::-1]
+            
+        for neighbor in graph[current_node]:
+            if neighbor not in visited:
+                parent[neighbor] = current_node
+                queue.append(neighbor)
+    
+    return "Não existe caminho"
+
+r = []    
+while True:
+    r.append(list(map(int, input().split())))
+    
+    if r[-1] == [0, 0]:
+        r.pop(-1)
+        break
+
+graph = concerte(r)
+resp = has_been_path(graph, 1, 3)
+print(resp)
